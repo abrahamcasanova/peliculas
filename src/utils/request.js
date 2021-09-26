@@ -2,6 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -72,13 +73,21 @@ service.interceptors.response.use(
       return res
     }
   },
-  error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.response.data.message ? error.response.data.message : error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+  async error => {
+    if (error.response.status === 401 && router.currentRoute.path !== '/login') {
+      // console.log(router)
+      await store.dispatch('user/resetToken')
+      Message.error(error || 'Has Error')
+      // next(`/login?redirect=${to.path}`)
+      router.go('/login')
+    } else {
+      console.log('err' + error) // for debug
+      Message({
+        message: error.response.data.message ? error.response.data.message : error.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )

@@ -54,10 +54,6 @@ export default {
       this.searchPool = this.generateRoutes(this.routes)
     },
     searchPool(list) {
-      // Support pinyin search
-      if (this.lang === 'zh' && this.supportPinyinSearch) {
-        this.addPinyinField(list)
-      }
       this.initFuse(list)
     },
     show(value) {

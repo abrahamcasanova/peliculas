@@ -87,7 +87,7 @@
 <script>
 // import LangSelect from '@/components/LangSelect'
 import { validEmail } from '@/utils/validate'
-import SocialSign from './components/SocialSignin'
+// import SocialSign from './components/SocialSignin'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -99,20 +99,22 @@ export default {
   },
   metaInfo() {
     return {
-      title: 'Mesa de control - JC Riesgos',
+      title: 'Peliculas',
       meta: [
-        { name: 'description', content: 'Mesa de control - JC Riesgos' },
-        { property: 'og:title', content: 'Mesa de control - JC Riesgos' },
-        { property: 'og:site_name', content: 'Mesa de control' },
+        { name: 'description', content: 'Peliculas' },
+        { property: 'og:title', content: 'Peliculas' },
+        { property: 'og:site_name', content: 'Peliculas' },
         { property: 'og:type', content: 'website' },
         { name: 'robots', content: 'index,follow' }
       ]
     }
   },
+  // eslint-disable-next-line vue/order-in-components
   components: {
     // LangSelect,
-    SocialSign
+    // SocialSign
   },
+  // eslint-disable-next-line vue/order-in-components
   data() {
     const validateUsername = (rule, value, callback) => {
       if (value && !validEmail(value)) {

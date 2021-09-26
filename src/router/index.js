@@ -69,11 +69,6 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/401',
-    component: () => import('@/views/error-page/401'),
-    hidden: true
-  },
-  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -86,35 +81,6 @@ export const constantRoutes = [
       }
     ]
   },
-  /*
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
-  */
-  /*
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'guide', icon: 'guide', noCache: true }
-      }
-    ]
-  },
-  */
   {
     path: '/profile',
     component: Layout,
@@ -175,7 +141,7 @@ export const asyncRoutes =
       }
     ]
   },
-  {
+  /* {
     path: '/tasks',
     component: Layout,
     alwaysShow: true, // will always show the root menu
@@ -198,7 +164,7 @@ export const asyncRoutes =
         meta: { title: 'taskList', icon: 'mdi mdi-card-text' }
       }
     ]
-  },
+  },*/
   {
     path: '/users',
     component: Layout,
@@ -236,6 +202,119 @@ export const asyncRoutes =
     ]
   },
   {
+    path: '/customers',
+    component: Layout,
+    meta: { noShowSubMenu: true, title: 'customers', icon: 'mdi mdi-account-supervisor-circle', affix: false,
+      permissions: [
+        'edit-customer',
+        'delete-customer',
+        'show-customer'
+      ]
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/customers/customers'),
+        name: 'ListCustomer',
+        meta: { title: 'customers', icon: 'mdi mdi-account-supervisor-circle', affix: false },
+        children: [
+          {
+            path: 'show-customer',
+            name: 'show-customer',
+            meta: { title: 'showCustomer', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          },
+          {
+            path: 'edit-customer',
+            name: 'edit-customer',
+            meta: { title: 'editCustomer', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          },
+          {
+            path: 'delete-customer',
+            name: 'delete-customer',
+            meta: { title: 'deleteCustomer', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/catalogos',
+    component: Layout,
+    redirect: '/catalogos/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Catalogs',
+    meta: { title: 'catalogs', icon: 'mdi mdi-folder',
+      permissions: [
+        'show-movies',
+        'edit-movies',
+        'delete-movies',
+        'show-schedules',
+        'edit-schedules',
+        'delete-schedules'
+      ]
+    },
+    children: [
+      {
+        path: 'peliculas',
+        component: () => import('@/views/catalogs/movies'),
+        name: 'Movies',
+        meta: { title: 'Peliculas', icon: 'mdi mdi-filmstrip',
+          permissions: [
+            'show-movies',
+            'edit-movies',
+            'delete-movies'
+          ]
+        },
+        children: [
+          {
+            path: 'show-movies',
+            name: 'show-movies',
+            meta: { title: 'showPaymentsType', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          },
+          {
+            path: 'edit-movies',
+            name: 'edit-movies',
+            meta: { title: 'editPaymentsType', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          },
+          {
+            path: 'delete-movies',
+            name: 'delete-movies',
+            meta: { title: 'deletePaymentsType', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          }
+        ]
+      },
+      {
+        path: 'turnos',
+        component: () => import('@/views/catalogs/schedule'),
+        name: 'Turnos',
+        meta: { title: 'Turnos', icon: 'mdi mdi-clock-outline',
+          permissions: [
+            'show-schedules',
+            'edit-schedules',
+            'delete-schedules'
+          ]
+        },
+        children: [
+          {
+            path: 'show-schedules',
+            name: 'show-schedules',
+            meta: { title: 'showSchedule', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          },
+          {
+            path: 'edit-schedules',
+            name: 'edit-schedules',
+            meta: { title: 'editSchedule', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          },
+          {
+            path: 'delete-schedules',
+            name: 'delete-schedules',
+            meta: { title: 'deleteSchedule', icon: 'mdi mdi-playlist-plus', type: 'action' }
+          }
+        ]
+      }
+    ]
+  }
+  /* {
     path: '/notices',
     component: Layout,
     meta: { noShowSubMenu: true, title: 'notices', icon: 'mdi mdi-account-group', affix: false,
@@ -270,7 +349,7 @@ export const asyncRoutes =
         ]
       }
     ]
-  }
+  }*/
   /*
   {
     path: '/icon',

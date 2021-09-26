@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>
         <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
+          <template #activator="{ on, attrs }">
             <v-btn
               color="primary mr-3"
               dark
@@ -47,7 +47,7 @@
         }"
         loading-text="Cargando....... Espere un momento"
       >
-        <template v-slot:[`item.roles`]="{ item }">
+        <template #[`item.roles`]="{ item }">
           <v-chip
             v-if="item.roles[0] != null"
             :color="getColor(item.roles[0].name)"
@@ -56,13 +56,13 @@
             {{ item.roles[0].name }}
           </v-chip>
         </template>
-        <template v-slot:[`item.actions`]="{ item }">
+        <template #[`item.actions`]="{ item }">
           <v-row
             align="center"
             justify="space-around"
           >
             <v-tooltip top>
-              <template v-slot:activator="{ on, attrs }">
+              <template #activator="{ on, attrs }">
                 <v-btn
                   v-if="checkSpecificPermission('edit-user')"
                   class="mx-2"
@@ -86,7 +86,7 @@
               confirm-button-text="Eliminar"
               cancel-button-text="Cancelar"
               confirm-button-type="danger force-white-color"
-              @onConfirm="deleteUser(item)"
+              @confirm="deleteUser(item)"
             >
               <v-btn
                 v-if="checkSpecificPermission('delete-user')"
@@ -234,7 +234,7 @@
 <script>
 import { getUsers, saveUser, updateUser, deleteUser } from '@/api/user'
 import { getRoles } from '@/api/role'
-import { checkSpecificPermission } from '@/utils/permission' // 权限判断函数
+import { checkSpecificPermission } from '@/utils/permission'
 
 export default {
   name: 'Users',
@@ -259,8 +259,7 @@ export default {
       valid: false,
       user: {
         name: '',
-        email: '',
-        admon_user: true
+        email: ''
       },
       listLoading: true,
       roles: [],
@@ -280,14 +279,6 @@ export default {
       rolRules: [
         v => !!v || 'Rol es requerido'
       ],
-      listQuery: {
-        page: 1,
-        limit: 10,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
-      },
       orders: [],
       headers: [
         { value: 'id', align: 'center', text: 'Folio' },
@@ -297,7 +288,15 @@ export default {
         { value: 'created_at', with: '100%', sortable: true, align: 'right', text: 'Registrado' },
         { value: 'actions', text: 'Acciones', sortable: false }
       ],
-      search: ''
+      search: '',
+      listQuery: {
+        page: 1,
+        limit: 10,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: '+id'
+      }
     }
   },
   computed: {

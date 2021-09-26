@@ -1,10 +1,11 @@
+import { filterAsyncRoutes } from '@/store/modules/permission'
 import request from '@/utils/request'
 
 export function login(data) {
   return request({
     // url: '/vue-element-admin/user/login',
     url: '/api/auth/login',
-    withCredentials: true,
+    withCredentials: false,
     method: 'post',
     data
   })

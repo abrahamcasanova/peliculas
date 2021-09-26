@@ -48,7 +48,8 @@ export default {
     ...mapGetters([
       'name',
       'avatar',
-      'roles'
+      'roles',
+      'userRoutes'
     ])
   },
   created() {

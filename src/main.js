@@ -27,6 +27,7 @@ import AxiosPlugin from 'vue-axios-cors'
 import moment from 'moment'
 import Vue2Filters from 'vue2-filters'
 import VueMeta from 'vue-meta'
+import LoadScript from 'vue-plugin-load-script'
 
 /**
  * If you don't want to use mock-server
@@ -37,14 +38,15 @@ import VueMeta from 'vue-meta'
  * please remove it before going online ! ! !
  */
 if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
+  /* const { mockXHR } = require('../mock')
+  mockXHR() */
 }
 Vue.directive('mask', VueMaskDirective)
 Vue.use(VueMask)
 Vue.use(AxiosPlugin)
 Vue.use(Vue2Filters)
 Vue.use(VueMeta)
+Vue.use(LoadScript)
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
@@ -56,10 +58,25 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
+Vue.filter('formatDateTime', function(value) {
+  if (value) {
+    return moment(String(value)).format('DD/MM/YYYY hh:mm A')
+  }
+})
+
 Vue.config.productionTip = false
 
 Vue.prototype.$apiKey = 'key_zeuz_api_yIw6yqdovu1y5Tr6zccFEaBTGG3fCIaN'
+moment.locale('es')
 Vue.prototype.moment = moment
+
+Vue.loadScript('https://chimpstatic.com/mcjs-connected/js/users/00e172d0ef0bc0e60dae401b7/0dba2f31e7a765b627ba64d87.js')
+  .then(() => {
+    console.log('cargado')
+  })
+  .catch(() => {
+  // Failed to fetch script
+  })
 
 new Vue({
   el: '#app',

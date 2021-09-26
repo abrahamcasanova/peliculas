@@ -76,6 +76,7 @@ const actions = {
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
         commit('SET_ROUTES', typeof routes === 'string' ? JSON.parse(routes) : routes)
+        localStorage.setItem('routes', typeof routes === 'string' ? routes : JSON.stringify(routes))
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -92,7 +93,7 @@ const actions = {
         removeToken()
         removeId()
         resetRouter()
-
+        localStorage.removeItem('routes')
         // reset visited views and cached views
         // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
         dispatch('tagsView/delAllViews', null, { root: true })

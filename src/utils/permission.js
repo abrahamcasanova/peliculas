@@ -29,12 +29,28 @@ export function checkPermission(value) {
 export function checkSpecificPermission(value) {
   // console.log(_permissions)
   if (value) {
-    const roles = store.getters && store.getters.routes
+    var roles = store.getters && store.getters.userRoutes
+    if (!roles) { roles = JSON.parse(localStorage.getItem('routes')) }
+    if (!roles) { return false }
+
     const permissionRoles = value
     const onlyPermissions = roles.filter(element => element.meta && element.meta.permissions)
-    const hasPermission = onlyPermissions.some(role => {
+    let hasPermission = onlyPermissions.some(role => {
       return role.meta.permissions.includes(permissionRoles)
     })
+    // second check
+    if (!hasPermission) {
+      onlyPermissions.some(role => {
+        role.children.forEach(function(children) {
+          if (children.meta && children.meta.permissions) {
+            hasPermission = children.meta.permissions.includes(permissionRoles)
+            return hasPermission
+          } else {
+            return false
+          }
+        })
+      })
+    }
     return hasPermission
   } else {
     console.error(`need roles! Like v-permission="['admin','editor'] custom...."`)
